@@ -51,9 +51,9 @@ RUN apt-get update && \
 # Create user coder:coder with no login,
 RUN adduser --uid 5000  --gecos "Code Server User" --disabled-login coder \
     && echo '%sudo ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd && \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd \
     && chmod g+rw /home/coder \
-    && chmod a+x /opt/exec  \
+    # && chmod a+x /opt/exec  \
     && chgrp -R 0 /home/coder \
     && chmod -R g=u /home/coder \
     && chmod g=u /etc/passwd;
