@@ -107,10 +107,10 @@ COPY ./IDE_Config /opt/IBM/Coder-Workspace/.vscode
 # RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension github.vscode-pull-request-github --force
 
 # set code-server to create a self signed cert
-RUN sed -i.bak 's/cert: false/cert: true/' /home/coder/.config/code-server/config.yaml
+# RUN sed -i.bak 's/cert: false/cert: true/' /home/coder/.config/code-server/config.yaml
 
 # Update code-server user settings
-RUN echo "{\"extensions.autoUpdate\": false,\n\"workbench.colorTheme\": \"Dark\"}" > /opt/IBM/IDE-Data/User/settings.json
+RUN echo "{\"extensions.autoUpdate\": true,\n\"workbench.colorTheme\": \"Dark\"}" > /opt/IBM/IDE-Data/User/settings.json
 
 COPY entrypoint /home/coder
 USER 10001
