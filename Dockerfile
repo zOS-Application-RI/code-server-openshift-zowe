@@ -110,7 +110,7 @@ COPY ./IDE_Config /opt/IBM/Coder-Workspace/.vscode
 # RUN sed -i.bak 's/cert: false/cert: true/' /home/coder/.config/code-server/config.yaml
 
 # Update code-server user settings
-RUN echo "{\"extensions.autoUpdate\": true,\n\"workbench.colorTheme\": \"Dark\"}" > /opt/IBM/IDE-Data/User/settings.json
+# RUN echo "{\"extensions.autoUpdate\": true,\n\"workbench.colorTheme\": \"Dark\"}" > /opt/IBM/IDE-Data/User/settings.json
 
 COPY entrypoint /home/coder
 USER 10001
