@@ -1,4 +1,4 @@
-arch: s390x
+arch: amd64
 #
 script: "echo 'Building Docker image with tags'"  
 #
