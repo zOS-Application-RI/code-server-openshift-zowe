@@ -1,5 +1,4 @@
 arch: 
-  - s390x
   - amd64
 services:
 - docker
@@ -31,12 +30,12 @@ deploy:
   script: chmod +x ./scripts/* && ./scripts/deploy-r.sh
   on:
     branch: master
-after_deploy:
-- NODEPORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services "$git_repo"-node)
-- NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address}')
-- export url=http://"$NODES":"$NODEPORT"
-- export short_url=$(curl -s http://tinyurl.com/api-create.php?url=${url})
-- echo ${short_url}
+# after_deploy:
+# - NODEPORT=$(kubectl get -o jsonpath="{.spec.ports[0].nodePort}" services "$git_repo"-node)
+# - NODES=$(kubectl get nodes -o jsonpath='{ $.items[*].status.addresses[?(@.type=="ExternalIP")].address}')
+# - export url=http://"$NODES":"$NODEPORT"
+# - export short_url=$(curl -s http://tinyurl.com/api-create.php?url=${url})
+# - echo ${short_url}
 notifications:
   slack:
     rooms:

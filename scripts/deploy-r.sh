@@ -2,8 +2,8 @@
 # @author Ashish Sahoo (ashissah@in.ibm.com)
 ############################################################################
 #Environment Variables                                                     # 
-export port_range=8080,9443,50000
-export kluster=mycluster-free
+# export port_range=8080,9443,50000
+# export kluster=mycluster-free
 
 ############################################################################
 #
