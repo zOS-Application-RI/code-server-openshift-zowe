@@ -21,7 +21,7 @@ deploy:
   provider: script
   skip_cleanup: true
   script: 
-     chmod +x ./scripts/* && ./scripts/dock-r.sh
+     chmod +x ./scripts/* && ./scripts/deploy.sh
   on:
     branch: main  
 notifications:
