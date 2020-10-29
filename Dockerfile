@@ -102,9 +102,9 @@ COPY ./IDE_Config /opt/IBM/Coder-Workspace/.vscode
 
 
 # Install code-server extensions
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension ibm.zopeneditor --force
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zowe.vscode-extension-for-zowe --force
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension github.vscode-pull-request-github --force
+# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension ibm.zopeneditor --force
+# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zowe.vscode-extension-for-zowe --force
+# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension github.vscode-pull-request-github --force
 
 # set code-server to create a self signed cert
 RUN sed -i.bak 's/cert: false/cert: true/' /home/coder/.config/code-server/config.yaml
