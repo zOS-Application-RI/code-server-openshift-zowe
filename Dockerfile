@@ -98,14 +98,14 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 # Create a directory to hold the VSCode user data
 RUN mkdir -p /opt/IBM/IDE-Data
 RUN chown -R coder:coder /opt/IBM/IDE-Data \
-    && chmod g+rw /opt/IBM/IDE-Data \
+    && chmod -R g+rw /opt/IBM/IDE-Data \
     && chgrp -R 0 /opt/IBM/IDE-Data \
     && chmod -R g=u /opt/IBM/IDE-Data
 
 # Create a directory to hold the user's Coder workspace to contain project/sample code
 RUN mkdir -p /opt/IBM/Coder-Workspace
 RUN chown -R coder:coder /opt/IBM/Coder-Workspace \
-    && chmod g+rw /opt/IBM/Coder-Workspace \
+    && chmod -R g+rw /opt/IBM/Coder-Workspace \
     && chgrp -R 0 /opt/IBM/Coder-Workspace \
     && chmod -R g=u /opt/IBM/Coder-Workspace
 
