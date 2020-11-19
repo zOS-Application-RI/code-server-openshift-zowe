@@ -43,7 +43,8 @@ RUN apt-get update && \
     locales \
     curl \
     dumb-init \
-    wget && \
+    wget \
+    unzip && \
     locale-gen en_US.UTF-8 && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
@@ -73,7 +74,7 @@ ENV LANG=en_US.UTF-8 \
 
 # The code-server runs on HTTPS port 8443 so expose it
 EXPOSE 8443/tcp
-
+EXPOSE 9000/tcp
 # Set root user for installation
 USER root
 WORKDIR /root
@@ -100,11 +101,16 @@ RUN mkdir /opt/IBM/Coder-Workspace/.vscode
 RUN chown -R coder:coder /opt/IBM/Coder-Workspace/.vscode 
 COPY ./IDE_Config /opt/IBM/Coder-Workspace/.vscode 
 
+RUN cd /opt/IBM/IDE-Data && \
+    wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \
+    unzip Wazi_Developer_VS_Code.zip && \
+    rm Wazi_Developer_VS_Code.zip
 
 # Install code-server extensions
-# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension ibm.zopeneditor --force
-# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zowe.vscode-extension-for-zowe --force
-# RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension github.vscode-pull-request-github --force
+RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
+RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zopeneditor-1.1.1.vsix --force
+RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zopendebug-1.1.0.vsix --force
+RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zopendebug-profileui-1.1.0.vsix --force
 
 # set code-server to create a self signed cert
 # RUN sed -i.bak 's/cert: false/cert: true/' /home/coder/.config/code-server/config.yaml
@@ -116,4 +122,6 @@ COPY entrypoint /home/coder
 USER 10001
 ENTRYPOINT ["/home/coder/entrypoint"]
 # Set the default command to launch the code-server project as a web application
-CMD ["code-server",  "--bind-addr", "0.0.0.0:8443", "--user-data-dir", "/opt/IBM/IDE-Data/", "/opt/IBM/Coder-Workspace", "--auth", "none", "--disable-telemetry"]
+# CMD ["code-server",  "--bind-addr", "0.0.0.0:8443", "--user-data-dir", "/opt/IBM/IDE-Data/", "/opt/IBM/Coder-Workspace", "--auth", "none", "--disable-telemetry"]
+#CMD ["code-server",  "--port", "8443", "--user-data-dir", "/opt/IBM/IDE-Data/", "/opt/IBM/Coder-Workspace", "--auth", "none", "--disable-telemetry"]
+CMD ["/opt/exec"]
