@@ -48,7 +48,7 @@ RUN apt-get update && \
     locale-gen en_US.UTF-8 && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
-
+COPY exec /opt
 # Create user coder:coder with no login,
 RUN adduser --uid 5000  --gecos "Code Server User" --disabled-login coder \
     && echo '%sudo ALL=(ALL:ALL) NOPASSWD:ALL' >> /etc/sudoers \
@@ -58,6 +58,9 @@ RUN adduser --uid 5000  --gecos "Code Server User" --disabled-login coder \
     && chgrp -R 0 /home/coder \
     && chmod -R g=u /home/coder \
     && chmod g=u /etc/passwd;
+COPY entrypoint /home/coder
+RUN chmod a+x /home/coder/entrypoint && \
+    chmod a+x /opt/exec
 
 WORKDIR /home/coder
 USER coder
@@ -78,6 +81,7 @@ EXPOSE 9000/tcp
 # Set root user for installation
 USER root
 WORKDIR /root
+
 
 # Set noninteractive installation
 RUN export DEBIAN_FRONTEND=noninteractive
@@ -118,7 +122,6 @@ RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension zopendebu
 # Update code-server user settings
 # RUN echo "{\"extensions.autoUpdate\": true,\n\"workbench.colorTheme\": \"Dark\"}" > /opt/IBM/IDE-Data/User/settings.json
 
-COPY entrypoint /home/coder
 USER 10001
 ENTRYPOINT ["/home/coder/entrypoint"]
 # Set the default command to launch the code-server project as a web application
