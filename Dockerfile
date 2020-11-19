@@ -100,14 +100,14 @@ RUN mkdir -p /opt/IBM/IDE-Data
 RUN chown -R coder:coder /opt/IBM/IDE-Data \
     && chmod -R g+rw /opt/IBM/IDE-Data \
     && chgrp -R 0 /opt/IBM/IDE-Data \
-    && chmod -R g=u /opt/IBM/IDE-Data
+    && chmod -R 777 /opt/IBM/IDE-Data
 
 # Create a directory to hold the user's Coder workspace to contain project/sample code
 RUN mkdir -p /opt/IBM/Coder-Workspace
 RUN chown -R coder:coder /opt/IBM/Coder-Workspace \
     && chmod -R g+rw /opt/IBM/Coder-Workspace \
     && chgrp -R 0 /opt/IBM/Coder-Workspace \
-    && chmod -R g=u /opt/IBM/Coder-Workspace
+    && chmod -R 777 /opt/IBM/Coder-Workspace
 
 # Set coder user for the remaining of the installation
 USER coder
