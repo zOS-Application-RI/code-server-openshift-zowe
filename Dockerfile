@@ -2,6 +2,12 @@ FROM ubuntu:latest
 LABEL maintainer="Asihsh K Sahoo <ashissah@in.ibm.com>"
 
 # Docker Container for Ubuntu HElib Base
+ENV LANG=en_US.UTF-8 \
+    LC_ALL=en_US.UTF-8 \
+    LANGUAGE=en_US.UTF-8 \
+    TZ=Asia/Kolkata \
+    # adding a sane default is needed since we're not erroring out via exec.
+    CODER_PASSWORD="coder"
 
 USER root
 
