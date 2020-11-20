@@ -91,6 +91,12 @@ RUN locale-gen en_US.UTF-8 && \
     chmod -R g=u /home/coder /etc/ansible /etc/resolv.conf && \
     chmod g=u /etc/passwd /etc/resolv.conf /etc/ssl/certs/ca-certificates.crt
 
+RUN locale-gen en_US.UTF-8 && \
+    cd /tmp && \
+    wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \
+    unzip Wazi_Developer_VS_Code.zip && \
+    rm Wazi_Developer_VS_Code.zip 
+
 ENV LC_ALL=en_US.UTF-8
 
 WORKDIR /home/coder
@@ -105,11 +111,6 @@ RUN mkdir -p projects && mkdir -p certs && \
     sudo rm -frv .config/ && \
     sudo chgrp -R 0 /home/coder
 
-RUN locale-gen en_US.UTF-8 && \
-    cd /tmp && \
-    wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \
-    unzip Wazi_Developer_VS_Code.zip && \
-    rm Wazi_Developer_VS_Code.zip 
 
 # Install code-server extensions
 RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
