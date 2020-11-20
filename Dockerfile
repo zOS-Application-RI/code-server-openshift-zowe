@@ -32,6 +32,52 @@ ENV LANG=en_US.UTF-8 \
     oc_version_commit="0cbc58b" \
     PATH="${PATH}:/home/coder/.local/bin"
 
+USER root
+
+# Setup the toolchain
+RUN apt update
+
+# set noninteractive installation
+RUN export DEBIAN_FRONTEND=noninteractive
+
+# Update the base OS
+RUN DEBIAN_FRONTEND=noninteractive apt update
+RUN DEBIAN_FRONTEND=noninteractive apt dist-upgrade -y
+
+# Install tzdata package
+RUN DEBIAN_FRONTEND=noninteractive apt install -y tzdata
+# Set UTC timezone
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime
+RUN dpkg-reconfigure --frontend noninteractive tzdata
+
+# Install the compilation toolchain we need...
+RUN DEBIAN_FRONTEND=noninteractive apt install -y \
+    xz-utils         \
+    curl             \
+    wget             \
+    build-essential  \
+    git              \
+    cmake            \
+    m4               \
+    file             \
+    patchelf         \
+    vim
+
+RUN apt-get update && \
+    apt-get install -y  \
+    sudo \
+    openssl \
+    net-tools \
+    git \
+    locales \
+    curl \
+    dumb-init \
+    wget \
+    unzip && \
+    locale-gen en_US.UTF-8 && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+    
 COPY exec /opt
 
 RUN . /etc/lsb-release && \
