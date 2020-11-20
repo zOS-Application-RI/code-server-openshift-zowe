@@ -114,7 +114,10 @@ USER coder
 WORKDIR /home/coder
 
 RUN mkdir /opt/IBM/Coder-Workspace/.vscode
-RUN chown -R coder:coder /opt/IBM/Coder-Workspace/.vscode 
+RUN chown -R coder:coder /opt/IBM/Coder-Workspace/.vscode \
+    && chmod -R g+rw     /opt/IBM/Coder-Workspace/.vscode \
+    && chgrp -R 0        /opt/IBM/Coder-Workspace/.vscode \
+    && chmod -R 777      /opt/IBM/Coder-Workspace/.vscode
 COPY ./IDE_Config /opt/IBM/Coder-Workspace/.vscode 
 
 RUN wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \

@@ -69,8 +69,8 @@ RUN . /etc/lsb-release && \
 RUN locale-gen en_US.UTF-8 && \
     cd /tmp && \
     # install code-server
-    ansible localhost -m apt -a "deb=$(curl -s https://api.github.com/repos/cdr/code-server/releases/latest |  jq -r '.assets[] | select(.browser_download_url | contains("amd64.deb")) | .browser_download_url')" && \
-    # curl -fsSL https://code-server.dev/install.sh | sh && \
+    # ansible localhost -m apt -a "deb=$(curl -s https://api.github.com/repos/cdr/code-server/releases/latest |  jq -r '.assets[] | select(.browser_download_url | contains("amd64.deb")) | .browser_download_url')" && \
+    curl -fsSL https://code-server.dev/install.sh | sh && \
     # install openshift/kubernetes client tools
     wget -O - https://github.com/openshift/origin/releases/download/${oc_version}/openshift-origin-client-tools-${oc_version}-${oc_version_commit}-linux-64bit.tar.gz | tar -xzv --strip 1 openshift-origin-client-tools-${oc_version}-${oc_version_commit}-linux-64bit/oc openshift-origin-client-tools-${oc_version}-${oc_version_commit}-linux-64bit/kubectl && \
     mv oc kubectl /usr/bin/ && \
@@ -91,19 +91,6 @@ RUN locale-gen en_US.UTF-8 && \
     chmod -R g=u /home/coder /etc/ansible /etc/resolv.conf && \
     chmod g=u /etc/passwd /etc/resolv.conf /etc/ssl/certs/ca-certificates.crt
 
-RUN locale-gen en_US.UTF-8 && \
-    cd /tmp && \
-    wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \
-    unzip Wazi_Developer_VS_Code.zip && \
-    rm Wazi_Developer_VS_Code.zip 
-
-# Install code-server extensions
-RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
-RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopeneditor-1.1.1.vsix --force
-RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-1.1.0.vsix --force
-RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-profileui-1.1.0.vsix --force
-RUN rm -rf /tmp/*.*
-
 ENV LC_ALL=en_US.UTF-8
 
 WORKDIR /home/coder
@@ -117,6 +104,19 @@ RUN mkdir -p projects && mkdir -p certs && \
     sudo chmod -R g+rw .nvm && \
     sudo rm -frv .config/ && \
     sudo chgrp -R 0 /home/coder
+
+RUN locale-gen en_US.UTF-8 && \
+    cd /tmp && \
+    wget -q -O Wazi_Developer_VS_Code.zip https://public.dhe.ibm.com/ibmdl/export/pub/software/htp/zos/tools/wazi/vscode/1.1.1/L-JYZG-BT4P8M_Wazi_Developer_for_VS_Code_V1.1.1_IPLA.zip && \
+    unzip Wazi_Developer_VS_Code.zip && \
+    rm Wazi_Developer_VS_Code.zip 
+
+# Install code-server extensions
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopeneditor-1.1.1.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-1.1.0.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-profileui-1.1.0.vsix --force
+RUN rm -rf /tmp/*.*
 
 COPY entrypoint /home/coder
 
