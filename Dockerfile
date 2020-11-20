@@ -98,10 +98,10 @@ RUN locale-gen en_US.UTF-8 && \
     rm Wazi_Developer_VS_Code.zip 
 
 # Install code-server extensions
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension /tmp/Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension /tmp/zopeneditor-1.1.1.vsix --force
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension /tmp/zopendebug-1.1.0.vsix --force
-RUN code-server --user-data-dir=/opt/IBM/IDE-Data/ --install-extension /tmp/zopendebug-profileui-1.1.0.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/Zowe.vscode-extension-for-zowe-1.10.1.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopeneditor-1.1.1.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-1.1.0.vsix --force
+RUN code-server --user-data-dir=/home/coder/ --install-extension /tmp/zopendebug-profileui-1.1.0.vsix --force
 RUN rm -rf /tmp/*.*
 
 ENV LC_ALL=en_US.UTF-8
