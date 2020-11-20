@@ -6,7 +6,7 @@
 # check for $CODER_ENABLE_AUTH.
 if [ -z  "$CODER_ENABLE_AUTH" ]; then
    if [ -z  "$CODER_ENABLE_TLS" ]; then
-      /usr/bin/code-server --bind-addr 0.0.0.0:9000 --user-data-dir /opt/IBM/IDE-Data/ /home/coder/projects --auth none;
+      /usr/bin/code-server --bind-addr 0.0.0.0:9000 /home/coder/projects ;
    elif [ -n "$CODER_ENABLE_TLS" ]; then
       case "$CODER_ENABLE_TLS" in
         true)
