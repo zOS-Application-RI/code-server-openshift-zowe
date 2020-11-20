@@ -58,6 +58,7 @@ RUN . /etc/lsb-release && \
     python3-pip \
     joe \
     ansible \
+    unzip   \
     bash-completion \
     openssh-client \
     default-jdk && \
