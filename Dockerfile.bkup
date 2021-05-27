@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:groovy-20210416
 LABEL maintainer="Asihsh K Sahoo <ashissah@in.ibm.com>"
 
 # Docker Container for Ubuntu HElib Base
