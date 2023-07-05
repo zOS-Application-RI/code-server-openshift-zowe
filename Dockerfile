@@ -20,7 +20,7 @@
 #   https://caveofcode.com/2017/06/how-to-setup-a-vpn-connection-from-inside-a-pod-in-kubernetes/
 ####### 
 
-FROM ubuntu:latest
+FROM ubuntu:kinetic
 LABEL maintainer="Asihsh K Sahoo <ashissah@in.ibm.com>"
 ENV LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
